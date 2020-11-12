@@ -1,0 +1,144 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '**.tf'
+      - '**.tpl'
+  pull_request:
+    paths:
+      - '**.tf'
+      - '**.tpl'
+
+jobs:
+  Format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        if: github.event_name == 'push'
+        uses: actions/checkout@v2
+
+      - name: Clone repo
+        if: github.event_name != 'push'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install dependencies
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+        run: |
+          brew install terraform
+
+      - name: Check formatting
+        run: |
+          terraform fmt -check
+
+  Validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+        run: |
+          brew install terraform
+
+      - name: Terraform init
+        run: |
+          terraform init
+
+      - name: Validate
+        env:
+          # Set AWS region due to https://github.com/hashicorp/terraform/issues/21408
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          terraform validate
+
+  Lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+        run: |
+          brew install terraform
+
+      - name: Terraform init
+        run: |
+          terraform init
+
+      - name: Run tflint with review comment on PR
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          flags: "--module"
+
+  Docs:
+    runs-on: macos-latest
+
+    steps:
+      - name: Clone repo
+        if: github.event_name == 'push'
+        uses: actions/checkout@v2
+
+      - name: Clone repo
+        if: github.event_name != 'push'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install dependencies
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+        run: |
+          brew install pre-commit terraform-docs terraform coreutils
+
+      - name: Check Docs
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+        run: pre-commit run --show-diff-on-failure --all-files terraform_docs
+
+  Security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+        run: |
+          brew install terraform
+
+      - name: Terraform init
+        run: |
+          terraform init
+
+      - name: Run tfsec with review comment on PR
+        if: github.event_name == 'pull_request'
+        uses: reviewdog/action-tfsec@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: "github-pr-review"
+          filter_mode: "nofilter"
+
+      - name: Run tfsec on the commit
+        if: github.event_name == 'push'
+        uses: reviewdog/action-tfsec@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: "github-check"
+          filter_mode: "nofilter"

@@ -1,0 +1,66 @@
+# Versioning labels
+- color: ef6bb4
+  name: bump:patch
+  description: Denotes a PR as introducting a patch-level change
+- color: ef6bb4
+  name: bump:minor
+  description: Denotes a PR as introducting a minor-level change
+- color: ef6bb4
+  name: bump:major
+  description: Denotes a PR as introducting a breaking change
+
+- color: e11d21
+  name: do-not-merge/hold
+  description: Indicates that a PR is not to be merged
+
+# Size labels
+- color: 009900
+  description: Denotes a PR that changes 0-9 lines, ignoring generated files
+  name: size/XS
+- color: 77bb00
+  description: Denotes a PR that changes 10-29 lines, ignoring generated files
+  name: size/S
+- color: eebb00
+  description: Denotes a PR that changes 30-99 lines, ignoring generated files
+  name: size/M
+- color: ee9900
+  description: Denotes a PR that changes 100-499 lines, ignoring generated files.
+  name: size/L
+- color: ee5500
+  description: Denotes a PR that changes 500-999 lines, ignoring generated files
+  name: size/XL
+- color: ee0000
+  description: Denotes a PR that changes 1000+ lines, ignoring generated files
+  name: size/XXL
+
+# Area labels
+- color: 0366d6
+  name: area/automation
+  description: All the bots
+- color: 0366d6
+  name: area/terraform
+  description: Denotes a PR as related to Terraform
+
+# Kind labels
+- color: aecef9
+  name: kind/bug
+  description: Categorizes issue or PR as related to a bug
+- color: aecef9
+  name: kind/enhancement
+  description: Categorizes issue or PR as related to an improvement or new feature
+- color: aecef9
+  name: kind/dependency
+  description: Categorizes issue or PR as related to dependencies
+- color: aecef9
+  name: kind/breaking
+  description: Categorizes issue or PR as breaking changes
+- color: aecef9
+  name: kind/release
+  description: Categorizes issue or PR as related to a release
+
+- color: aecef9
+  name: kind/discussion
+  description: Categorizes issue or PR as a discussion or RFC
+- color: aecef9
+  name: kind/support
+  description: Categorizes issue or PR as a support question

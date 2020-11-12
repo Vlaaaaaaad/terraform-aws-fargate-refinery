@@ -1,0 +1,25 @@
+name: Labels
+
+on:
+  push:
+    paths:
+      - .github/labels.yml
+      - .github/workflows/labels.yml
+    branches:
+      - master
+
+jobs:
+  Manage:
+    name: Manage GitHub labels
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Manage labels
+        uses: micnncim/action-label-syncer@v1
+        with:
+          manifest: .github/labels.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

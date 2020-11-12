@@ -1,0 +1,12 @@
+bump:patch:
+  - '**'
+  - '.*'
+  - '.*/**'
+
+area/automation:
+  - .github/*
+  - .github/**/*
+  - .mergify.yml
+
+area/terraform:
+  - '**/*.tf'

@@ -1,0 +1,36 @@
+# REQUIRED: DNS (without trailing dot)
+route53_zone_name = "example.com"
+
+# REQUIRED: Refinery configs
+refinery_sampler_configs = [
+  {
+    dataset_name = "_default",
+    options = [
+      {
+        "name"  = "Sampler"
+        "value" = "DeterministicSampler"
+      },
+      {
+        "name"  = "SampleRate"
+        "value" = 1
+      },
+    ]
+  },
+]
+
+# Optional: override the name
+# name = "refinery"
+
+# Optional: customize the VPC
+# azs                = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+# vpc_cidr           = "10.20.0.0/16"
+# vpc_public_subnets = ["10.20.1.0/24", "10.20.2.0/24", "10.20.3.0/24"]
+
+# Optional: use pre-exiting ACM Certificate instead of creating and validating a new certificate@
+# certificate_arn = "arn:aws:acm:eu-west-1:135367859851:certificate/70e008e1-c0e1-4c7e-9670-7bb5bd4f5a84"
+
+# Optional: Send Refinery logs&metrics to Honeycomb, instead of ECS&nowhere
+# refinery_logger_option   = "honeycomb"
+# refinery_logger_api_key  = "00000000000000000000000000000000"
+# refinery_metrics_option  = "honeycomb"
+# refinery_metrics_api_key = "00000000000000000000000000000000"

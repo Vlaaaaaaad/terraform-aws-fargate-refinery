@@ -1,0 +1,12 @@
+image: vlaaaaaaad/gitpod-terraform:latest
+
+tasks:
+  - name: Install pre-commit hooks
+    command: >
+      pre-commit install --install-hooks
+
+  - name: Print help
+    command: >
+      printf "To setup SSH with keys from env vars run ~/helpers/setup-ssh-insecure.sh \n \
+      To setup SSH with keypt.co run ~/helpers/setup-ssh-krypt.sh \n \
+      \n \n \n Please close this window"

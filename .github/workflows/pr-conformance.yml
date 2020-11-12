@@ -1,0 +1,24 @@
+name: Conformance
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited, labeled, unlabeled]
+
+jobs:
+  Labels:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Assign content labels
+        uses: actions/labeler@v2
+        with:
+          configuration-path: .github/auto-label.yml
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Assign size label
+        uses: pascalgn/size-label-action@v0.2.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
