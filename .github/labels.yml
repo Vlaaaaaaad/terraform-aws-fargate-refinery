@@ -58,6 +58,7 @@
   name: kind/release
   description: Categorizes issue or PR as related to a release
 
+
 - color: aecef9
   name: kind/discussion
   description: Categorizes issue or PR as a discussion or RFC
