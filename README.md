@@ -42,9 +42,9 @@ Using this module as a standalone project is **only recommended for testing**.
 1. Clone this github repository:
 
 ```console
-$ git clone git@github.com:vlaaaaaaad/terraform-aws-refinery.git
+$ git clone git@github.com:vlaaaaaaad/terraform-aws-fargate-refinery.git
 
-$ cd terraform-aws-refinery
+$ cd terraform-aws-fargate-refinery
 ```
 
 2. Copy the sample `terraform.tfvars.sample` into `terraform.tfvars` and specify the required variables there.
@@ -66,7 +66,7 @@ module "refinery" {
   # or
   # Pull a specific version from Terraform Module Registry
   source  = "Vlaaaaaaad/fargate-refinery/aws"
-  version = "0.0.1"
+  version = "0.1.0"
 
   # REQUIRED: DNS (without trailing dot)
   route53_zone_name = "example.com"
