@@ -190,7 +190,7 @@ Using this module also allows integration with existing AWS resources -- VPC, Su
 | firelens\_configuration | The FireLens configuration for the Refinery container. This is used to specify and configure a log router for container logs. See [AWS Docs](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_FirelensConfiguration.html) | <pre>object({<br>    type    = string<br>    options = map(string)<br>  })</pre> | `null` | no |
 | image\_repository | The Refinery image repository | `string` | `"vlaaaaaaad/refinery-fargate-image"` | no |
 | image\_repository\_credentials | The container repository credentials; required when using a private repo.  This map currently supports a single key; `"credentialsParameter"`, which should be the ARN of a Secrets Manager's secret holding the credentials | `map(string)` | `null` | no |
-| image\_tag | The Refinery image tag to use | `string` | `"v0.13.0"` | no |
+| image\_tag | The Refinery image tag to use | `string` | `"v0.14.0"` | no |
 | name | The name to use on all resources created (VPC, ALB, etc) | `string` | `"refinery"` | no |
 | redis\_node\_type | The instance type used for the Redis cache cluster. See [all available values on the AWS website](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html) | `string` | `"cache.t2.micro"` | no |
 | redis\_port | The Redis port | `string` | `"6379"` | no |

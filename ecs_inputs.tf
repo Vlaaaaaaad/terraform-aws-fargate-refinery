@@ -34,7 +34,7 @@ variable "image_repository" {
 
 variable "image_tag" {
   description = "The Refinery image tag to use"
-  default     = "v0.13.0"
+  default     = "v0.14.0"
 }
 
 variable "image_repository_credentials" {
