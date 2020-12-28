@@ -6,7 +6,7 @@ on:
       - .github/labels.yml
       - .github/workflows/labels.yml
     branches:
-      - master
+      - main
 
 jobs:
   Manage:
