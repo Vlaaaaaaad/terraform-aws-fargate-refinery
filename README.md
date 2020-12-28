@@ -147,7 +147,7 @@ Using this module also allows integration with existing AWS resources -- VPC, Su
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13, < 0.14 |
+| terraform | >= 0.13, < 0.15 |
 | aws | ~> 3 |
 | local | ~> 1.2 |
 
