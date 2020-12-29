@@ -1,6 +1,11 @@
 resource "random_string" "redis_password" {
-  length  = 64
-  special = true
+  length           = 64
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+  min_special      = 1
+  special          = true
+  override_special = "!&#$^<>-"
 }
 
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
