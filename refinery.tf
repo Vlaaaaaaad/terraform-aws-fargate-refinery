@@ -36,16 +36,6 @@ module "refinery" {
 
   environment = [
     {
-      name = "SAMPROXY_REDIS_HOST"
-      value = join(
-        ":",
-        [
-          aws_elasticache_replication_group.redis.primary_endpoint_address,
-          var.redis_port,
-        ],
-      )
-    },
-    {
       # Hacky hack to replace containers in case of config change
       name  = "CONFIG_FILE_SHA"
       value = sha512(local.filled_rules_file)

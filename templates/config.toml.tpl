@@ -22,6 +22,8 @@ Metrics = "${metrics_option}"
 [PeerManagement]
 Type = "redis"
 RedisHost = "${redis_host}"
+RedisPassword = "${redis_password}"
+UseTLS = true
 
 [InMemCollector]
 CacheCapacity = ${cache_capacity}

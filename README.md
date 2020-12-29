@@ -149,13 +149,15 @@ Using this module also allows integration with existing AWS resources -- VPC, Su
 |------|---------|
 | terraform | >= 0.13, < 0.15 |
 | aws | ~> 3 |
-| local | ~> 1.2 |
+| local | ~> 2 |
+| random | ~> 3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | aws | ~> 3 |
+| random | ~> 3 |
 
 ## Inputs
 

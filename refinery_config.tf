@@ -25,6 +25,7 @@ locals {
           var.redis_port,
         ],
       )
+      redis_password = random_string.redis_password.result,
     }
   )
 

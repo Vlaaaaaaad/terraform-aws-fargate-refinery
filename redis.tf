@@ -1,3 +1,8 @@
+resource "random_string" "redis_password" {
+  length  = 64
+  special = true
+}
+
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   name = var.name
 
@@ -17,10 +22,9 @@ resource "aws_elasticache_replication_group" "redis" {
     aws_security_group.redis.id,
   ]
 
-  # Refinery does not support Redis with TLS
-  #  see https://github.com/honeycombio/refinery/issues/103
   at_rest_encryption_enabled = true
-  transit_encryption_enabled = false #tfsec:ignore:AWS036
+  transit_encryption_enabled = true
+  auth_token                 = random_string.redis_password.result
 
   tags = local.tags
 }
