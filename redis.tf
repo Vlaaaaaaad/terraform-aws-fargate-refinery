@@ -20,7 +20,7 @@ resource "aws_elasticache_replication_group" "redis" {
   # Refinery does not support Redis with TLS
   #  see https://github.com/honeycombio/refinery/issues/103
   at_rest_encryption_enabled = true
-  transit_encryption_enabled = false #tfsec:ignore:AWS036
+  transit_encryption_enabled = false
 
   tags = local.tags
 }
