@@ -1,4 +1,4 @@
-image: vlaaaaaaad/gitpod-terraform:latest
+image: public.ecr.aws/vlaaaaaaad/gitpod-terraform:5f7691cd61d05731d842edd5190724d53f0e8eaf
 
 tasks:
   - name: Install pre-commit hooks
