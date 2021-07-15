@@ -1,6 +1,6 @@
 module "refinery" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.46.0"
+  version = "0.57.0"
 
   container_name         = "refinery"
   container_image        = "${var.image_repository}:${var.image_tag}"
@@ -36,24 +36,14 @@ module "refinery" {
 
   environment = [
     {
-      name = "SAMPROXY_REDIS_HOST"
-      value = join(
-        ":",
-        [
-          aws_elasticache_replication_group.redis.primary_endpoint_address,
-          var.redis_port,
-        ],
-      )
-    },
-    {
       # Hacky hack to replace containers in case of config change
       name  = "CONFIG_FILE_SHA"
-      value = sha512(local.filled_rules_file)
+      value = sha512(local.filled_config_file)
     },
     {
       # Hacky hack to replace containers in case of rules change
       name  = "RULES_FILE_SHA"
-      value = sha512(local.filled_config_file)
+      value = sha512(data.local_file.rules.content_base64)
     },
   ]
 
