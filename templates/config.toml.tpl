@@ -37,8 +37,8 @@ MaxAlloc = ${max_alloc}
 LoggerHoneycombAPI = "https://api.honeycomb.io"
 LoggerAPIKey = "${logger_api_key}"
 LoggerDataset = "${logger_dataset_name}"
-LoggerSamplerEnabled = "{logger_sampler_enabled}"
-LoggerSamplerThroughput = "{logger_sampler_throughput}"
+LoggerSamplerEnabled = ${logger_sampler_enabled}
+LoggerSamplerThroughput = ${logger_sampler_throughput}
 
 [HoneycombMetrics]
 MetricsHoneycombAPI = "https://api.honeycomb.io"

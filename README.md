@@ -31,7 +31,7 @@ Due to Fargate on ECS having [no support for configuration files](https://github
 
 This module requires **Terraform 1.0**.
 
-This module is in beta (pre-`0.1`) which means **any new release can have breaking changes**.
+This module is in beta (pre-`0.1`) which means **any new release can have breaking changes** and stuff is not exhaustively tested.
 
 ## Usage
 
@@ -71,51 +71,8 @@ module "refinery" {
   # REQUIRED: DNS (without trailing dot)
   route53_zone_name = "example.com"
 
-  # REQUIRED: Refinery configs
-  refinery_sampler_configs = [
-    {
-      dataset_name = "_default",
-      options = [
-        {
-          "name"  = "Sampler"
-          "value" = "DeterministicSampler"
-        },
-        {
-          "name"  = "SampleRate"
-          "value" = 1
-        },
-      ]
-    },
-    {
-      dataset_name = "my-test-app",
-      options = [
-        {
-          "name"  = "Sampler"
-          "value" = "DynamicSampler"
-        },
-        {
-          "name"  = "SampleRate"
-          "value" = "2"
-        },
-        {
-          "name"  = "FieldList"
-          "value" = "['app.run']"
-        },
-        {
-          "name"  = "UseTraceLength"
-          "value" = "true"
-        },
-        {
-          "name"  = "AddSampleRateKeyToTrace"
-          "value" = "true"
-        },
-        {
-          "name"  = "AddSampleRateKeyToTraceField"
-          "value" = "meta.refinery.dynsampler_key"
-        },
-      ]
-    },
-  ]
+  # REQUIRED: Refinery config file
+  refinery_rules_file_path = "${path.module}/myrules.toml"
 
   # Optional: override the name
   name = "refinery"
