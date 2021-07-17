@@ -10,7 +10,7 @@ variable "redis_port" {
 
 variable "redis_version" {
   description = "The Redis version"
-  default     = "5.0.6"
+  default     = "6.x"
 }
 
 variable "redis_subnets" {

@@ -1,6 +1,6 @@
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "v5.10.0"
+  version = "v6.3.0"
 
   name = format(
     "%.32s",

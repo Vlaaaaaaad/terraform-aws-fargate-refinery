@@ -29,12 +29,12 @@ variable "ecs_settings" {
 
 variable "image_repository" {
   description = "The Refinery image repository"
-  default     = "vlaaaaaaad/refinery-fargate-image"
+  default     = "public.ecr.aws/vlaaaaaaad/refinery-fargate-image"
 }
 
 variable "image_tag" {
   description = "The Refinery image tag to use"
-  default     = "v0.14.0"
+  default     = "1.4.0"
 }
 
 variable "image_repository_credentials" {

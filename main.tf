@@ -23,7 +23,7 @@ locals {
 
   refinery_url = "https://${coalesce(
     element(concat(aws_route53_record.refinery.*.fqdn, [""]), 0),
-    module.alb.this_lb_dns_name,
+    module.alb.lb_dns_name,
     "_"
   )}"
 

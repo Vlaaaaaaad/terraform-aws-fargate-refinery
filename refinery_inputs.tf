@@ -1,3 +1,9 @@
+variable "refinery_compress_peer_communication" {
+  description = "The flag to enable or disable compressing span data when forwarded to peers"
+  default     = true
+}
+
+#tfsec:ignore:GEN001
 variable "refinery_accepted_api_keys" {
   description = "The list of Honeycomb API keys that the proxy will accept"
   type        = list(string)
@@ -59,6 +65,7 @@ variable "refinery_logger_option" {
   }
 }
 
+#tfsec:ignore:GEN001
 variable "refinery_logger_api_key" {
   description = "The API key to use to send Refinery logs to Honeycomb"
   default     = ""
@@ -69,6 +76,17 @@ variable "refinery_logger_dataset_name" {
   default     = "Refinery Logs"
 }
 
+variable "refinery_logger_sampler_enabled" {
+  description = "The flag to enable or disable sampling Refinery logs"
+  default     = false
+}
+
+variable "refinery_logger_sampler_throughput" {
+  description = "The per key per second throughput for the log message dynamic sampler"
+  default     = 10
+}
+
+#tfsec:ignore:GEN001
 variable "refinery_metrics_api_key" {
   description = "The API key used to send Refinery metrics to Honeycomb"
   default     = ""
@@ -97,46 +115,6 @@ variable "refinery_metrics_reporting_interval" {
   default     = 3
 }
 
-variable "refiery_sampler_dry_run" {
-  description = "The flag to enable DryRun mode for Refinery"
-  type        = bool
-  default     = false
-}
-
-variable "refinery_dry_run_field_name" {
-  description = "The key to add to each event when in DryRun mode"
-  default     = "refinery_kept"
-}
-
-variable "refinery_default_sample_rate" {
-  description = "The sampler rate for the default sampler"
-  default     = 1
-}
-
-variable "refinery_sampler_configs" {
-  description = "The Refinery sampling rules configuration"
-  type = list(
-    object(
-      {
-        dataset_name = string
-        options      = list(map(string))
-      }
-    )
-  )
-
-  default = [
-    {
-      dataset_name = "_default",
-      options = [
-        {
-          "name"  = "Sampler"
-          "value" = "DynamicSampler"
-        },
-        {
-          "name"  = "SampleRate"
-          "value" = 1
-        },
-      ]
-    },
-  ]
+variable "refinery_rules_file_path" {
+  description = "The path to a toml files with the Refinery rules. Must be less than 8Kb"
 }

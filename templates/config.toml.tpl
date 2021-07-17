@@ -1,6 +1,7 @@
 # Refinery Config
 ListenAddr = "0.0.0.0:8080"
 PeerListenAddr = "0.0.0.0:8081"
+CompressPeerCommunication = ${compress_peer_communication}
 APIKeys = [
   %{ for api_key in accepted_api_keys ~}
   "${api_key}",
@@ -22,6 +23,8 @@ Metrics = "${metrics_option}"
 [PeerManagement]
 Type = "redis"
 RedisHost = "${redis_host}"
+RedisPassword = "${redis_password}"
+UseTLS = true
 
 [InMemCollector]
 CacheCapacity = ${cache_capacity}
@@ -34,6 +37,8 @@ MaxAlloc = ${max_alloc}
 LoggerHoneycombAPI = "https://api.honeycomb.io"
 LoggerAPIKey = "${logger_api_key}"
 LoggerDataset = "${logger_dataset_name}"
+LoggerSamplerEnabled = ${logger_sampler_enabled}
+LoggerSamplerThroughput = ${logger_sampler_throughput}
 
 [HoneycombMetrics]
 MetricsHoneycombAPI = "https://api.honeycomb.io"
