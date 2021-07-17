@@ -2,21 +2,7 @@
 route53_zone_name = "example.com"
 
 # REQUIRED: Refinery configs
-refinery_sampler_configs = [
-  {
-    dataset_name = "_default",
-    options = [
-      {
-        "name"  = "Sampler"
-        "value" = "DeterministicSampler"
-      },
-      {
-        "name"  = "SampleRate"
-        "value" = 1
-      },
-    ]
-  },
-]
+refinery_rules_file_path = "${path.module}/myrules.toml"
 
 # Optional: override the name
 # name = "refinery"

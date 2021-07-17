@@ -18,7 +18,7 @@ This module contains the Terraform infrastructure code that creates the required
 - Two Parameters in [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) to store the Refinery configuration and rules and access them natively in Fargate
 - A single-node Redis (cluster mode disabled) Cluster in [AWS ElastiCache](https://aws.amazon.com/elasticache/) to be used by Refinery for high-availability and peer discovery
 
-![Diagram showing the architecture. The Honeycomb-instrumented apps use Route53 to connect to the ALB. The ALB routes traffic to refinery containers running in Fargate, in different AZs and public subnets. The Refinery containers connect to a single-AZ Redis and communicate between them.](./assets/diagram.svg)
+![Diagram showing the architecture. The Honeycomb-instrumented apps use Route53 to connect to the ALB. The ALB routes traffic to Refinery containers running in Fargate, in different AZs and public subnets. The Refinery containers connect to a single-AZ Redis and communicate between them.](./assets/diagram.svg)
 
 ## Gotchas
 
@@ -43,11 +43,13 @@ $ cd terraform-aws-fargate-refinery
 
 2. Copy the sample `terraform.tfvars.sample` into `terraform.tfvars` and specify the required variables there.
 
-3. Run `terraform init` to download required providers and modules.
+3. Create a `myrules.toml` file with your Refinery rules.
 
-4. Run `terraform apply` to apply the Terraform configuration and create the required infrastructure.
+4. Run `terraform init` to download required providers and modules.
 
-5. Run `terraform output refinery_url` to get URL where Refinery is reachable. (Note: It may take a minute or two for the URL to become reachable the first time)
+5. Run `terraform apply` to apply the Terraform configuration and create the required infrastructure.
+
+6. Run `terraform output refinery_url` to get URL where Refinery is reachable. (Note: It may take a minute or two for the URL to become reachable the first time)
 
 ### As a Terraform module
 
@@ -60,7 +62,7 @@ module "refinery" {
   # or
   # Pull a specific version from Terraform Module Registry
   source  = "Vlaaaaaaad/fargate-refinery/aws"
-  version = "0.1.0"
+  version = "0.3.0"
 
   # REQUIRED: DNS (without trailing dot)
   route53_zone_name = "example.com"
@@ -193,12 +195,12 @@ Using this module also allows integration with existing AWS resources -- VPC, Su
 | <a name="input_firelens_configuration"></a> [firelens\_configuration](#input\_firelens\_configuration) | The FireLens configuration for the Refinery container. This is used to specify and configure a log router for container logs. See [AWS Docs](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_FirelensConfiguration.html) | <pre>object({<br>    type    = string<br>    options = map(string)<br>  })</pre> | `null` | no |
 | <a name="input_image_repository"></a> [image\_repository](#input\_image\_repository) | The Refinery image repository | `string` | `"public.ecr.aws/vlaaaaaaad/refinery-fargate-image"` | no |
 | <a name="input_image_repository_credentials"></a> [image\_repository\_credentials](#input\_image\_repository\_credentials) | The container repository credentials; required when using a private repo.  This map currently supports a single key; `"credentialsParameter"`, which should be the ARN of a Secrets Manager's secret holding the credentials | `map(string)` | `null` | no |
-| <a name="input_image_tag"></a> [image\_tag](#input\_image\_tag) | The Refinery image tag to use | `string` | `"1.3.0"` | no |
+| <a name="input_image_tag"></a> [image\_tag](#input\_image\_tag) | The Refinery image tag to use | `string` | `"1.4.0"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name to use on all resources created (VPC, ALB, etc) | `string` | `"refinery"` | no |
 | <a name="input_redis_node_type"></a> [redis\_node\_type](#input\_redis\_node\_type) | The instance type used for the Redis cache cluster. See [all available values on the AWS website](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html) | `string` | `"cache.t2.micro"` | no |
 | <a name="input_redis_port"></a> [redis\_port](#input\_redis\_port) | The Redis port | `string` | `"6379"` | no |
 | <a name="input_redis_subnets"></a> [redis\_subnets](#input\_redis\_subnets) | If using a pre-exiting VPC, subnet IDs to be used for Redis | `list(string)` | `[]` | no |
-| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | The Redis version | `string` | `"5.0.6"` | no |
+| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | The Redis version | `string` | `"6.x"` | no |
 | <a name="input_refinery_accepted_api_keys"></a> [refinery\_accepted\_api\_keys](#input\_refinery\_accepted\_api\_keys) | The list of Honeycomb API keys that the proxy will accept | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
 | <a name="input_refinery_cache_capacity"></a> [refinery\_cache\_capacity](#input\_refinery\_cache\_capacity) | The number of spans to cache | `number` | `1000` | no |
 | <a name="input_refinery_compress_peer_communication"></a> [refinery\_compress\_peer\_communication](#input\_refinery\_compress\_peer\_communication) | The flag to enable or disable compressing span data when forwarded to peers | `bool` | `true` | no |
