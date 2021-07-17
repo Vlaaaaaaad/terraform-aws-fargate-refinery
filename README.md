@@ -1,8 +1,8 @@
 # Refinery
 
 [![GitHub License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Gitpod: ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod&style=flat-square)](https://gitpod.io/from-referrer/)
-[![Maintenence status: best-effort](https://img.shields.io/badge/Maintained%3F-best--effort-yellow?style=flat-square)](https://github.com/vlaaaaaaad)
+[![Gitpod: ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod&style=flat-square)](https://gitpod.io/#https://github.com/vlaaaaaaad/terraform-aws-fargate-refinery)
+[![Maintenance status: best-effort](https://img.shields.io/badge/Maintained%3F-best--effort-yellow?style=flat-square)](https://github.com/vlaaaaaaad)
 
 ## Introduction
 
@@ -26,12 +26,6 @@ Due to Fargate on ECS having [no support for configuration files](https://github
 
 - configuration files cannot be bigger than 8Kb
 - a [custom image](https://github.com/Vlaaaaaaad/refinery-fargate-image) has to be used as the upstream image does not have `sh` or `base64` included
-
-## Versions
-
-This module requires **Terraform 1.0**.
-
-This module is in beta (pre-`0.1`) which means **any new release can have breaking changes** and stuff is not exhaustively tested.
 
 ## Usage
 
@@ -169,7 +163,7 @@ Using this module also allows integration with existing AWS resources -- VPC, Su
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_refinery_rules_file_path"></a> [refinery\_rules\_file\_path](#input\_refinery\_rules\_file\_path) | The path to a toml files with the Refinery rules | `any` | n/a | yes |
+| <a name="input_refinery_rules_file_path"></a> [refinery\_rules\_file\_path](#input\_refinery\_rules\_file\_path) | The path to a toml files with the Refinery rules. Must be less than 8Kb | `any` | n/a | yes |
 | <a name="input_acm_certificate_arn"></a> [acm\_certificate\_arn](#input\_acm\_certificate\_arn) | The ARN of a certificate issued by AWS ACM. If empty, a new ACM certificate will be created and validated using Route53 DNS | `string` | `""` | no |
 | <a name="input_acm_certificate_domain_name"></a> [acm\_certificate\_domain\_name](#input\_acm\_certificate\_domain\_name) | The Route53 domain name to use for ACM certificate. Route53 zone for this domain should be created in advance. Specify if it is different from value in `route53_zone_name` | `string` | `""` | no |
 | <a name="input_alb_additional_sgs"></a> [alb\_additional\_sgs](#input\_alb\_additional\_sgs) | A list of additional Security Groups to attach to the ALB | `list(string)` | `[]` | no |

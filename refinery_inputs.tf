@@ -113,5 +113,5 @@ variable "refinery_metrics_reporting_interval" {
 }
 
 variable "refinery_rules_file_path" {
-  description = "The path to a toml files with the Refinery rules"
+  description = "The path to a toml files with the Refinery rules. Must be less than 8Kb"
 }
