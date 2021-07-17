@@ -8,10 +8,9 @@ variable "redis_port" {
   default     = "6379"
 }
 
-# TODO: test 6.x too
 variable "redis_version" {
   description = "The Redis version"
-  default     = "5.0.6"
+  default     = "6.x"
 }
 
 variable "redis_subnets" {
