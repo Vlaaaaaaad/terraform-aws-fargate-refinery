@@ -3,6 +3,7 @@ variable "refinery_compress_peer_communication" {
   default     = true
 }
 
+#tfsec:ignore:GEN001
 variable "refinery_accepted_api_keys" {
   description = "The list of Honeycomb API keys that the proxy will accept"
   type        = list(string)
@@ -64,6 +65,7 @@ variable "refinery_logger_option" {
   }
 }
 
+#tfsec:ignore:GEN001
 variable "refinery_logger_api_key" {
   description = "The API key to use to send Refinery logs to Honeycomb"
   default     = ""
@@ -84,6 +86,7 @@ variable "refinery_logger_sampler_throughput" {
   default     = 10
 }
 
+#tfsec:ignore:GEN001
 variable "refinery_metrics_api_key" {
   description = "The API key used to send Refinery metrics to Honeycomb"
   default     = ""
