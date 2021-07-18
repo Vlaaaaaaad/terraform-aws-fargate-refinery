@@ -52,6 +52,11 @@ variable "firelens_configuration" {
   default = null
 }
 
+variable "aws_cloudwatch_log_group_kms_key_id" {
+  description = "The ID of the KMS key to use when encrypting log data"
+  default     = null
+}
+
 variable "ecs_task_cpu" {
   description = "The number of CPU units to be used by Refinery"
   default     = 2048

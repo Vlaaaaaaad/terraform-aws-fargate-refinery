@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS082
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "v3.2.0"

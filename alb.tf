@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS005 tfsec:ignore:AWS083 tfsec:ignore:AWS004
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "v6.3.0"
@@ -28,6 +29,8 @@ module "alb" {
     prefix  = var.alb_log_location_prefix
   }
 
+  drop_invalid_header_fields  = true
+  listener_ssl_policy_default = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
   http_tcp_listeners = [
     {
       port        = 80

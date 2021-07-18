@@ -65,7 +65,7 @@ variable "refinery_logger_option" {
   }
 }
 
-#tfsec:ignore:GEN001
+#tfsec:ignore:GEN001 tfsec:ignore:GEN005
 variable "refinery_logger_api_key" {
   description = "The API key to use to send Refinery logs to Honeycomb"
   default     = ""
@@ -86,7 +86,7 @@ variable "refinery_logger_sampler_throughput" {
   default     = 10
 }
 
-#tfsec:ignore:GEN001
+#tfsec:ignore:GEN001 tfsec:ignore:GEN005
 variable "refinery_metrics_api_key" {
   description = "The API key used to send Refinery metrics to Honeycomb"
   default     = ""
