@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS090
 resource "aws_ecs_cluster" "cluster" {
   name = var.name
 
@@ -79,6 +80,7 @@ resource "aws_ecs_service" "refinery" {
 resource "aws_cloudwatch_log_group" "refinery" {
   name              = var.name
   retention_in_days = var.ecs_cloudwatch_log_retention_in_days
+  kms_key_id        = var.aws_cloudwatch_log_group_kms_key_id #tfsec:ignore:AWS089
 
   tags = local.tags
 }
