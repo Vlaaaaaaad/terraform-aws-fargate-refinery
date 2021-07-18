@@ -62,7 +62,7 @@ module "refinery" {
   # or
   # Pull a specific version from Terraform Module Registry
   source  = "Vlaaaaaaad/fargate-refinery/aws"
-  version = "0.3.0"
+  version = "0.3.1"
 
   # REQUIRED: DNS (without trailing dot)
   route53_zone_name = "example.com"
