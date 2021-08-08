@@ -62,7 +62,7 @@ module "refinery" {
   # or
   # Pull a specific version from Terraform Module Registry
   source  = "Vlaaaaaaad/fargate-refinery/aws"
-  version = "0.3.1"
+  version = "0.3.2"
 
   # REQUIRED: DNS (without trailing dot)
   route53_zone_name = "example.com"
@@ -109,7 +109,7 @@ Using this module also allows integration with existing AWS resources -- VPC, Su
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.49.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.53.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | 2.1.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.1.0 |
 

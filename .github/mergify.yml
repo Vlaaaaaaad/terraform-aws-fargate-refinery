@@ -1,0 +1,15 @@
+pull_request_rules:
+   - name: Automatic merge for Dependabot pull requests
+     conditions:
+       - author~=^dependabot\[bot\]$
+       - status-success=Validate
+       - status-success=Format
+       - status-success=Lint
+       - status-success=Security
+       - status-success=Docs
+       - status-success=Labels
+       - base=main
+     actions:
+       merge:
+         method: squash
+         strict: true
