@@ -1,6 +1,6 @@
 module "refinery" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.57.0"
+  version = "0.58.0"
 
   container_name         = "refinery"
   container_image        = "${var.image_repository}:${var.image_tag}"
