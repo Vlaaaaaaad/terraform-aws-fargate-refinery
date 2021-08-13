@@ -12,133 +12,239 @@ on:
       - '**.tf'
       - '**.tpl'
 
+env:
+  HOMEBREW_NO_INSTALL_CLEANUP: "ON"
+  HOMEBREW_CACHE: ${{ github.workspace }}/.cache/brew
+
 jobs:
   Format:
     runs-on: ubuntu-latest
+    outputs:
+      needs_fix: ${{ steps.decision.outputs.needs_fix }}
 
     steps:
-      - name: Clone repo
+      - name: Get the code
         if: github.event_name == 'push'
         uses: actions/checkout@v2
-
-      - name: Clone repo
+      - name: Get the code
         if: github.event_name != 'push'
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Install dependencies
-        env:
-          HOMEBREW_NO_INSTALL_CLEANUP: 1
-        run: |
-          brew install terraform
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Check formatting
+        id: formatting_check
+        run: terraform fmt -check
+
+      - name: Set output
+        if: always()
+        id: decision
+        # Use a custom output to run auto-fixes only if the docs check failed,
+        #  and not if installing dependencies failed, for example.
         run: |
-          terraform fmt -check
+          if [[ "${{ steps.formatting_check.outcome }}" == "success" ]]; then
+            echo "::set-output name=needs_fix::false"
+          else
+            echo "::set-output name=needs_fix::true"
+          fi
 
   Validate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
+      - name: Get the code
+        if: github.event_name == 'push'
         uses: actions/checkout@v2
+      - name: Get the code
+        if: github.event_name != 'push'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
-      - name: Install dependencies
-        env:
-          HOMEBREW_NO_INSTALL_CLEANUP: 1
-        run: |
-          brew install terraform
+      - name: Setup the Terraform cache
+        uses: actions/cache@v2
+        with:
+          path: .terraform
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform init
-        run: |
-          terraform init
+        run: terraform init
 
       - name: Validate
-        env:
-          # Set AWS region due to https://github.com/hashicorp/terraform/issues/21408
-          AWS_DEFAULT_REGION: us-east-1
-        run: |
-          terraform validate
+        run: terraform validate
 
   Lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
+      - name: Get the code
+        if: github.event_name == 'push'
         uses: actions/checkout@v2
+      - name: Get the code
+        if: github.event_name != 'push'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
-      - name: Install dependencies
-        env:
-          HOMEBREW_NO_INSTALL_CLEANUP: 1
-        run: |
-          brew install terraform
+      - name: Setup the Terraform cache
+        uses: actions/cache@v2
+        with:
+          path: .terraform
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform init
-        run: |
-          terraform init
+        run: terraform init
 
       - name: Run tflint with review comment on PR
         uses: reviewdog/action-tflint@master
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          flags: "--module"
+          flags: --module
 
   Docs:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    outputs:
+      needs_fix: ${{ steps.decision.outputs.needs_fix }}
 
     steps:
-      - name: Clone repo
+      - name: Get the code
         if: github.event_name == 'push'
         uses: actions/checkout@v2
-
-      - name: Clone repo
+      - name: Get the code
         if: github.event_name != 'push'
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
+      - name: Setup the Homebrew cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.HOMEBREW_CACHE }}
+          key: ${{ runner.os }}-brew-
+      - name: Setup the Terraform cache
+        uses: actions/cache@v2
+        with:
+          path: .terraform
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
 
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
       - name: Install dependencies
-        env:
-          HOMEBREW_NO_INSTALL_CLEANUP: 1
-        run: |
-          brew install pre-commit gawk coreutils terraform-docs terraform
+        run: brew install pre-commit terraform-docs
 
       - name: Check Docs
-        env:
-          AWS_DEFAULT_REGION: us-east-1
+        id: docs_check
         run: pre-commit run --show-diff-on-failure --all-files terraform_docs
+
+      - name: Set output
+        if: failure()
+        id: decision
+        # Use a custom output to run auto-fixes only if the docs check failed,
+        #  and not if installing dependencies failed, for example.
+        run: |
+          if [[ "${{ steps.docs_check.outcome }}" == "success" ]]; then
+            echo "::set-output name=needs_fix::false"
+          else
+            echo "::set-output name=needs_fix::true"
+          fi
 
   Security:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
+      - name: Get the code
+        if: github.event_name == 'push'
         uses: actions/checkout@v2
+      - name: Get the code
+        if: github.event_name != 'push'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
-      - name: Install dependencies
-        env:
-          HOMEBREW_NO_INSTALL_CLEANUP: 1
-        run: |
-          brew install terraform
+      - name: Setup the Terraform cache
+        uses: actions/cache@v2
+        with:
+          path: .terraform
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform init
-        run: |
-          terraform init
+        run: terraform init
 
       - name: Run tfsec with review comment on PR
         if: github.event_name == 'pull_request'
         uses: reviewdog/action-tfsec@master
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: "github-pr-review"
-          filter_mode: "nofilter"
+          reporter: github-pr-review
+          filter_mode: nofilter
 
       - name: Run tfsec on the commit
         if: github.event_name == 'push'
         uses: reviewdog/action-tfsec@master
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: "github-check"
-          filter_mode: "nofilter"
+          reporter: github-check
+          filter_mode: nofilter
+
+  Autofix:
+    name: Autofix small issues
+    runs-on: ubuntu-latest
+    needs: [Validate, Format, Docs]
+    if: |
+      failure() &&
+      needs.Validate.result == 'success' &&
+      (needs.Docs.outputs.needs_fix == 'true' || needs.Format.outputs.needs_fix == 'true') &&
+      github.repository == 'Vlaaaaaaad/terraform-aws-fargate-refinery'
+
+    steps:
+      - name: Get the code
+        if: github.event_name == 'push'
+        uses: actions/checkout@v2
+        # See https://github.com/stefanzweifel/git-auto-commit-action#commits-made-by-this-action-do-not-trigger-new-workflow-runs
+        with:
+          token: ${{ secrets.VLAAAAAAAD_PERSONAL_ACCESS_TOKEN }}
+      - name: Get the code
+        if: github.event_name != 'push'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.VLAAAAAAAD_PERSONAL_ACCESS_TOKEN }}
+      - name: Setup the Homebrew cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.HOMEBREW_CACHE }}
+          key: ${{ runner.os }}-brew-
+      - name: Setup the Terraform cache
+        uses: actions/cache@v2
+        with:
+          path: .terraform
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Install dependencies
+        run: brew install pre-commit terraform-docs
+
+      - name: Fix the README
+        if: needs.Docs.outputs.needs_fix == 'true'
+        run: pre-commit run --all-files terraform_docs
+
+      - name: Fix code formatting
+        if: needs.Format.outputs.needs_fix == 'true'
+        run: pre-commit run --all-files terraform_fmt
+
+      - name: Push changes to the PR
+        if: failure()
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Autofixes for formatting & docs
+          commit_user_email: github-actions@github.com

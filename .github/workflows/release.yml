@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v2
+
+      - name: Create a release based on the PR labels
+        id: bumpr
+        uses: haya14busa/action-bumpr@v1
+        with:
+          default_bump_level: patch
+
+      - name: Create a pretty GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.bumpr.outputs.next_version }}
+          name: Release ${{ steps.bumpr.outputs.next_version }}
+          body: ${{ steps.bumpr.outputs.message }}
+          draft: false
+          prerelease: false

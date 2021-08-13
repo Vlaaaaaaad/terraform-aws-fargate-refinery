@@ -7,6 +7,9 @@ on:
       - .github/workflows/labels.yml
     branches:
       - main
+  schedule:
+      # run every Saturday
+    - cron:  '0 0 * * SAT'
 
 jobs:
   Manage:
@@ -14,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
+      - name: Get the code
         uses: actions/checkout@v2
 
-      - name: Manage labels
+      - name: Manage labels available on the repo
         uses: micnncim/action-label-syncer@v1
         with:
           manifest: .github/labels.yml
