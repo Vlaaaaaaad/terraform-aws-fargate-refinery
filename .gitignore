@@ -1,4 +1,7 @@
-#  Local .terraform directories
+# GitHub Actions cache
+**/.cache/*
+
+#  Local .terraform directories and caches
 **/.terraform/*
 
 # .tfstate files
@@ -9,7 +12,6 @@
 *.tfvars
 
 .DS_Store
-.DS_Store?
 **/.DS_Store
 ._*
 .Spotlight-V100
