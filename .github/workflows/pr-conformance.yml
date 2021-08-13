@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
+      - name: Get the code
         uses: actions/checkout@v2
 
-      - name: Assign content labels
+      - name: Assign labels based on the PR content
         if: github.actor != 'dependabot[bot]'
         # Labels are added manually in .github/dependabot.yml
         #  due to Dependabot secrets issues
@@ -20,9 +20,10 @@ jobs:
         uses: actions/labeler@v3
         with:
           configuration-path: .github/auto-label.yml
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          sync-labels: true
 
-      - name: Assign size label
+      - name: Assign a size label based on the number of lines changed
         uses: pascalgn/size-label-action@v0.4.3
         if: github.actor != 'dependabot[bot]'
         # Skip the size label due to due to Dependabot secrets issues
