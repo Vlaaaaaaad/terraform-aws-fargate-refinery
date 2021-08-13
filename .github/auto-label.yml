@@ -1,12 +1,14 @@
-bump:patch:
-  - '**'
-  - '.*'
-  - '.*/**'
-
 area/automation:
   - .github/*
   - .github/**/*
+  - .pre-commit-config.yaml
+  - .terraform-docs.yml
+  - .gitpod.yml
   - .mergify.yml
 
 area/terraform:
   - '**/*.tf'
+  - 'templates/**'
+  - .terraform.lock.hcl
+  - .pre-commit-config.yaml
+  - .terraform-docs.yml

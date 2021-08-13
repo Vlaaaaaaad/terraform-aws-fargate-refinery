@@ -19,7 +19,7 @@ data "aws_availability_zones" "available" {
 locals {
   azs             = var.azs != [] ? var.azs : data.aws_availability_zones.available.names
   vpc_id          = var.vpc_id == "" ? module.vpc[0].vpc_id : var.vpc_id
-  certificate_arn = var.acm_certificate_arn == "" ? module.certificate.this_acm_certificate_arn : var.acm_certificate_arn
+  certificate_arn = var.acm_certificate_arn == "" ? module.certificate.acm_certificate_arn : var.acm_certificate_arn
 
   refinery_url = "https://${coalesce(
     element(concat(aws_route53_record.refinery.*.fqdn, [""]), 0),
