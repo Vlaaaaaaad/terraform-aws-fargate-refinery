@@ -7,10 +7,12 @@ on:
     paths:
       - '**.tf'
       - '**.tpl'
+      - '.terraform.lock.hcl'
   pull_request:
     paths:
       - '**.tf'
       - '**.tpl'
+      - '.terraform.lock.hcl'
 
 env:
   HOMEBREW_NO_INSTALL_CLEANUP: "ON"
