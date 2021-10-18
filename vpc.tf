@@ -1,7 +1,7 @@
 #tfsec:ignore:AWS082
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.9.0"
+  version = "3.10.0"
 
   count = var.vpc_id == "" ? 1 : 0
 
