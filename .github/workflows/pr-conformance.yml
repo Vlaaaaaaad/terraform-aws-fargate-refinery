@@ -17,7 +17,7 @@ jobs:
         # Labels are added manually in .github/dependabot.yml
         #  due to Dependabot secrets issues
         #  see https://github.com/dependabot/dependabot-core/issues/3253
-        uses: actions/labeler@v3
+        uses: actions/labeler@v4.0.0
         with:
           configuration-path: .github/auto-label.yml
           repo-token: ${{ secrets.GITHUB_TOKEN }}
