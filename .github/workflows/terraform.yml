@@ -27,10 +27,10 @@ jobs:
     steps:
       - name: Get the code
         if: github.event_name == 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get the code
         if: github.event_name != 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
@@ -59,10 +59,10 @@ jobs:
     steps:
       - name: Get the code
         if: github.event_name == 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get the code
         if: github.event_name != 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
@@ -86,10 +86,10 @@ jobs:
     steps:
       - name: Get the code
         if: github.event_name == 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get the code
         if: github.event_name != 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
@@ -119,10 +119,10 @@ jobs:
     steps:
       - name: Get the code
         if: github.event_name == 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get the code
         if: github.event_name != 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
       - name: Setup the Homebrew cache
@@ -163,10 +163,10 @@ jobs:
     steps:
       - name: Get the code
         if: github.event_name == 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get the code
         if: github.event_name != 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
@@ -210,13 +210,13 @@ jobs:
     steps:
       - name: Get the code
         if: github.event_name == 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         # See https://github.com/stefanzweifel/git-auto-commit-action#commits-made-by-this-action-do-not-trigger-new-workflow-runs
         with:
           token: ${{ secrets.VLAAAAAAAD_PERSONAL_ACCESS_TOKEN }}
       - name: Get the code
         if: github.event_name != 'push'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.VLAAAAAAAD_PERSONAL_ACCESS_TOKEN }}
