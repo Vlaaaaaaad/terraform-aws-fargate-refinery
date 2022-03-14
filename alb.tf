@@ -1,7 +1,7 @@
 #tfsec:ignore:AWS005 tfsec:ignore:AWS083 tfsec:ignore:AWS004
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "6.6.1"
+  version = "6.8.0"
 
   name = format(
     "%.32s",
