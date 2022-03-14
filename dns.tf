@@ -21,7 +21,7 @@ resource "aws_route53_record" "refinery" {
 
 module "certificate" {
   source  = "terraform-aws-modules/acm/aws"
-  version = "3.2.1"
+  version = "3.4.0"
 
   create_certificate = var.acm_certificate_arn == "" ? true : false
 
