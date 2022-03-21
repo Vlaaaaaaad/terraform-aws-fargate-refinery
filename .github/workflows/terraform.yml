@@ -67,7 +67,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Setup the Terraform cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .terraform
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
@@ -94,7 +94,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Setup the Terraform cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .terraform
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
@@ -126,12 +126,12 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - name: Setup the Homebrew cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.HOMEBREW_CACHE }}
           key: ${{ runner.os }}-brew-
       - name: Setup the Terraform cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .terraform
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
@@ -171,7 +171,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Setup the Terraform cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .terraform
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
@@ -221,12 +221,12 @@ jobs:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.VLAAAAAAAD_PERSONAL_ACCESS_TOKEN }}
       - name: Setup the Homebrew cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.HOMEBREW_CACHE }}
           key: ${{ runner.os }}-brew-
       - name: Setup the Terraform cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .terraform
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
